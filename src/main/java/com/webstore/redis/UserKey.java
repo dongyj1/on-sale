@@ -1,13 +1,18 @@
 package com.webstore.redis;
 
 
+public class UserInfoKey extends BasePrefix {
 
-public class UserKey extends BasePrefix {
+    public static final int TOKEN_EXPIRE = 3600*24 * 2;
 
-    private UserKey(String prefix) {
-        super(0, prefix);
+    public UserInfoKey(int expireTimeInSeconds, String prefix) {
+        super(expireTimeInSeconds, prefix);
     }
 
-    public static UserKey getById = new UserKey("id");
-    public static UserKey getByName = new UserKey("name");
+    public UserInfoKey(String prefix) {
+        super(prefix);
+    }
+    public static UserInfoKey token = new UserInfoKey(TOKEN_EXPIRE, "tk");
+
+
 }
