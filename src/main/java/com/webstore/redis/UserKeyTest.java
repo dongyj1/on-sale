@@ -2,12 +2,12 @@ package com.webstore.redis;
 
 
 
-public class UserKey extends BasePrefix {
+public class UserKeyTest extends BasePrefix {
 
-    private UserKey(String prefix) {
+    private UserKeyTest(String prefix) {
         super(0, prefix);
     }
 
-    public static UserKey getById = new UserKey("id");
-    public static UserKey getByName = new UserKey("name");
+    public static UserKeyTest getById = new UserKeyTest("id");
+    public static UserKeyTest getByName = new UserKeyTest("name");
 }

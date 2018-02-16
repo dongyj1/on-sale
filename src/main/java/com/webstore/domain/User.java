@@ -76,4 +76,18 @@ public class User {
     public void setLoginTimeCount(Integer loginTimeCount) {
         this.loginTimeCount = loginTimeCount;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", head='" + head + '\'' +
+                ", registerDate=" + registerDate +
+                ", lastLoginDate=" + lastLoginDate +
+                ", loginTimeCount=" + loginTimeCount +
+                '}';
+    }
 }

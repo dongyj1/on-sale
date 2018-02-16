@@ -2,7 +2,7 @@ package com.webstore.controller;
 
 import com.webstore.domain.UserTest;
 import com.webstore.redis.RedisService;
-import com.webstore.redis.UserKey;
+import com.webstore.redis.UserKeyTest;
 import com.webstore.result.CodeMsg;
 import com.webstore.result.Result;
 import com.webstore.service.UserTestService;
@@ -63,7 +63,7 @@ public class SampleController {
     @RequestMapping("/redis/get")
     @ResponseBody
     public Result<UserTest> redisGet() {
-        UserTest userTest = redisService.get(UserKey.getById, "1", UserTest.class);
+        UserTest userTest = redisService.get(UserKeyTest.getById, "1", UserTest.class);
         return Result.success(userTest);
     }
 
@@ -73,7 +73,7 @@ public class SampleController {
         UserTest userTest = new UserTest();
         userTest.setId(1);;
         userTest.setName("1111111");
-        boolean res = redisService.set(UserKey.getById, "1", userTest);
+        boolean res = redisService.set(UserKeyTest.getById, "1", userTest);
         return Result.success(res);
     }
 }

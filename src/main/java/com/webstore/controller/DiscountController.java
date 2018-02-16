@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/discount")
-public class DiscountGoodsController {
+public class DiscountController {
 
-    private static Logger logger = LoggerFactory.getLogger(DiscountGoodsController.class);
+    private static Logger logger = LoggerFactory.getLogger(DiscountController.class);
 
     @Autowired
     UserService userService;

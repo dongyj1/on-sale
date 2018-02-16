@@ -5,7 +5,7 @@ import com.webstore.dao.UserDao;
 import com.webstore.domain.User;
 import com.webstore.exception.GlobalException;
 import com.webstore.redis.RedisService;
-import com.webstore.redis.UserInfoKey;
+import com.webstore.redis.UserKey;
 import com.webstore.result.CodeMsg;
 import com.webstore.util.MD5Util;
 import com.webstore.util.UUIDUtil;
@@ -14,14 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
 @Service
 public class UserService {
 
-    public static String cookie_name_token = "token";
+    public static String COOKIE_NAME_TOKEN = "token";
 
     @Autowired
     UserDao userDao;
@@ -37,8 +36,8 @@ public class UserService {
         if (StringUtils.isEmpty(token)) {
             return null;
         }
-        User user = redisService.get(UserInfoKey.token, token, User.class);
-        // extend the user valid time
+        User user = redisService.get(UserKey.token, token, User.class);
+        // extend the user token expire time
         if (user != null) {
             addCookie(response, token, user);
         }
@@ -47,9 +46,9 @@ public class UserService {
 
 
     private void addCookie(HttpServletResponse response, String token, User user) {
-        Cookie cookie = new Cookie(cookie_name_token, token);
-        redisService.set(UserInfoKey.token, token, user);
-        cookie.setMaxAge(UserInfoKey.token.expireTimeInSeconds());
+        Cookie cookie = new Cookie(COOKIE_NAME_TOKEN, token);
+        redisService.set(UserKey.token, token, user);
+        cookie.setMaxAge(UserKey.token.expireTimeInSeconds());
         cookie.setPath("/");
         response.addCookie(cookie);
     }
@@ -62,13 +61,14 @@ public class UserService {
         String formpass = loginVo.getPassword();
         // Validate phoneNumber exists
         User user = userDao.getById(Long.parseLong(phoneNumber));
+        System.out.println(user);
         if (user == null) {
             throw new GlobalException(CodeMsg.MOBILE_NOT_EXIST);
         }
         // Validate password with input password
         String dbPass = user.getPassword();
         String saltDB = user.getSalt();
-        String calculatedPass = MD5Util.inputPassToDBPass(formpass, saltDB);
+        String calculatedPass = MD5Util.formPassToDBPass(formpass, saltDB);
         if (!dbPass.equals(calculatedPass)) {
             throw new GlobalException(CodeMsg.PASSWORD_ERROR);
         }

@@ -16,6 +16,9 @@ public class CodeMsg {
     public static CodeMsg MOBILE_NOT_EXIST = new CodeMsg(500214, "MOBILE_NOT_EXIST");
     public static CodeMsg PASSWORD_ERROR = new CodeMsg(500215, "PASSWORD_ERROR");
 
+    public static CodeMsg DISCOUNT_OVER = new CodeMsg(500500, "Discount is over");
+    public static CodeMsg REPEATE_DISCOUNT = new CodeMsg(500501, "No multiple discounts");
+
     private CodeMsg (int code, String msg) {
         this.code = code;
         this.msg = msg;
